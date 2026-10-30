@@ -56,8 +56,39 @@ Each issue verifies its own observable behavior and a relevant failure case. The
 
 Read-only planning precedes commit. A3 must reject stale, unauthorized and unconfirmed overloaded changes from its first write; A5–A7 add consent and refresh interfaces. H1 reads the approved records written by A3. D2 document extraction and D3 interpretation may proceed independently after D1; extracted file text must be reviewable before interpretation.
 
-## Reconciliation record — October 30, 2026
+## Per-issue acceptance criteria
 
-All 32 product issues already existed, with matching titles, milestones and specified blocking edges. No duplicate issues or milestones were needed. Stable planning IDs are preserved in issue references. Existing acceptance criteria are retained; clarifications cover fixed fixture clocks, protected changes, consent scope, conflict-safe Undo, and evidence distinctions. Issue statuses, assignments, estimates, dates and labels are preserved.
+Use these criteria with the issue links and dependencies above. Cross-feature requirements and T1–T8 remain in the [product contract](interview-planning-spec.md).
 
-The original handoff predated repository access and foundation decisions. The maintained contract now reflects Next.js/TypeScript, SQLite/Drizzle, local synthetic-data access, and the existing Node test conventions. It does not claim feature implementation or a completed workflow harness.
+- **F1:** Resetting the intake baseline yields one opportunity and zero interviews; alternate variants have their documented, stable records. Example day totals 3h existing tasks + 1h meeting + proposed 3h practice = 7h. A second option brings total to 9h for maximum override. No real private recruiting or calendar data appears in fixtures.
+- **F2:** User can open the app and reach interview entry with keyboard or pointer. Empty and request-error states are intelligible. Navigation does not require a seeded interview.
+- **F3:** Create and update survive reload. Replaying the same logical operation does not duplicate records. Activity records identify actor/source and the affected record. Invalid or unauthorized mutation is rejected without side effects.
+- **I1:** Valid submission creates exactly one interview associated with existing opportunity. Double-submitting the same request does not create duplicates. Validation feedback preserves entered data; no invented details.
+- **I2:** Navigate away, reload and reopen: identical interview ID and confirmed fields appear. Unknown values are labeled unknown/tentative, not silently filled. A missing record produces a clear not-found state.
+- **I3:** A report missing a date remains tentative. Confirming a date changes that record, not a new one. Updating one field does not overwrite unrelated known details.
+- **I4:** Same identifiable round reported twice yields one interview record. Two genuinely distinct rounds remain separate. Ambiguous match is blocked pending review; no silent merge.
+- **I5:** One supported report via chat and equivalent form produce matching canonical state. Rephrased duplicate reports do not create extra rounds. Unknown date/format remains unknown; user can correct interpretation.
+- **B1:** Every substantive research claim has a source or an explicit inference label. Snapshot remains repeatable without a new live research call. No blanket assertion that a specific Google round will test a topic.
+- **B2:** Interview opens associated brief correctly. Sources are navigable and distinguishable by type. Missing guidance is shown as unknown, not a generic promise.
+- **B3:** Every displayed recommendation contains all required attributes. Weak or inferred recommendations are clearly distinguished from confirmed instructions. Cards are usable as inputs to the later proposal without inventing new tasks.
+- **P1:** Protected work and firm deadlines are visible and distinguishable. Existing workload matches fixture records after reload. Calendar commitments are not rendered as synthetic task clones.
+- **P2:** Fixture day load is 4h before prep. Meeting mirrored as interview/calendar record counts once. Target and maximum capacity are separately reported. Calculation is deterministic for identical input.
+- **P3:** Known equivalent task is marked reused rather than created anew. Unrelated task is not reused. Existing task identity and status are preserved.
+- **P4:** Proposals have dated or unscheduled outcomes and explain why. Tentative interview with unknown date receives no date-dependent placement. Repeated generation changes zero task/interview records. Protected work is never proposed as a silent move.
+- **P5:** Every affected existing task appears by identity with old/new planned day. 7h target overload and 9h max overload are visually distinct. Opening/closing proposal does not mutate data.
+- **A1:** Selection can include activity but reject move. Unselected items do not become implicitly approved. No database mutation occurs when toggling selection.
+- **A2:** Selecting 3h practice and rejecting 2h move shows 7h target overload. Changing selection changes preview immediately and correctly. No undisclosed tasks or date moves appear.
+- **A3:** Approved feasible selection persists exactly once; replay is idempotent. Unselected tasks and unrelated records unchanged. Stale proposal rejected without unauthorized writes. Overloaded proposals blocked until opt-in override workflow exists.
+- **A4:** Selected flexible task moves to intended day. Task deadline remains unchanged. Rejected move is not applied. Deferral never deletes the task.
+- **A5:** 7h day on 6h target cannot commit via ordinary approval. Explicit confirmation permits selected work when under maximum. Post-approval day remains labeled 7h and over target.
+- **A6:** 9h selection cannot commit with only target-overload acknowledgment. Deliberate maximum override is recorded with scope. Protected commitments and deadlines remain unchanged.
+- **A7:** Change underlying task after preview; old approval cannot commit. Updated diff displays changed workload/moves. No material change silently inherits old approval.
+- **A8:** One injected failure produces truthful per-item outcomes. Retry fails/succeeds safely without duplicating prior successes. Eligible Undo restores only appropriate local change; does not overwrite newer conflicting edits. No blanket success message on partial failure.
+- **H1:** Approved task appears immediately and after reload. Unapproved proposal item never appears as a task. Agenda does not invent times or duplicate commitments.
+- **H2:** Done persists after reload. Undo restores prior status without modifying another task. Completion never assigns mastery.
+- **H3:** Task completion occurs before reflection. No reflection means no proficiency inference. Saved reflection remains attached to original practice task.
+- **D1:** Pasted content remains associated with correct interview. User can review input before extraction. Input never sets interview outcome/attendance without explicit report.
+- **D2:** TXT and Markdown text are reviewable. PDF and DOCX text extraction works for supported text-based files. Unsupported or unextractable document returns clear guidance without inventing content.
+- **D3:** Clear source-backed fields extracted from example notes. Unknown/unsupported feedback is marked missing or tentative. No fabricated interview result, decision or attendance.
+- **D4:** User can edit a wrong extracted topic prior to saving. Saved corrections survive reload. Raw input and confirmed/corrected summary remain distinguishable.
+- **D5:** A reported React hooks difficulty becomes an associated, source-attributed gap. A gap can be retrieved from that interview. No scheduling changes or fake proficiency scores occur.

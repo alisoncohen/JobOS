@@ -4,13 +4,12 @@
 **Spec key:** JSOS-VS-001  
 **Date:** October 30, 2026  
 **Status:** Adopted for project documentation on October 30, 2026; product workflows remain planned  
-**Product decisions:** Locked Q1–Q24 from `/grill-me`  
 **Issue breakdown:** 32 existing product tickets (ALI-5–ALI-36), four product milestones; development foundation tracked separately in M0 (ALI-37–ALI-42)  
 **Tracker:** [Job Search OS — Interview Planning Vertical Slice](https://linear.app/aliwonderland/project/job-search-os-interview-planning-vertical-slice-3044c395c70e). Workflow statuses and labels are managed in Linear; this document does not automatically mark work implementation-ready.
 
-**Source hierarchy:** (1) accepted conversation decisions and final vertical-slice product contract, (2) the Linear handoff and 32-issue plan, (3) Product & Experience Specification v0.1. If source texts diverge, the most recent explicit decision controls. This document does not authorize access to live job-search records or imply an implemented system.
+**Source authority:** This contract and the [confirmed scope decisions](product-design-context.md) record current requirements. The archived v0.1 provides historical context. Record later explicit decisions here and in the Linear mirror so implementation does not depend on access to past conversations.
 
-**Repository review (October 30, 2026):** The local JobOS repository now exists. React, Next.js App Router, TypeScript, CSS Modules, SQLite and stable Drizzle are selected. Node and pnpm versions are pinned in the repository. The application is a single-user, loopback-only synthetic-data prototype without login. The foundation contains database migration/reopen coverage using `node:test` and a production-startup HTTP smoke test; it does not yet implement interview workflows or the T1–T8 acceptance suite. See [development access and secrets](development-access.md) for the current access boundary. No project glossary or ADR files were found. Natural-language/debrief model providers and the full workflow test harness remain open.
+**Repository review (October 30, 2026):** The local JobOS repository now exists. React, Next.js App Router, TypeScript, CSS Modules, SQLite and stable Drizzle are selected. Node and pnpm versions are pinned in the repository. The application is a single-user, loopback-only synthetic-data prototype without login. The foundation contains database migration/reopen coverage using `node:test` and a production-startup HTTP smoke test; it does not yet implement interview workflows or the T1–T8 acceptance suite. See [development access and secrets](development-access.md) for the current access boundary. The [stack ADR](decisions/0001-local-development-stack.md) records the architecture decision. Natural-language/debrief model providers and the full workflow test harness remain open.
 
 **Document ownership:** This repository file is the maintained product contract; the Linear project document mirrors it. Linear owns execution status, issue relationships and milestone progress. The [planning map](interview-planning-linear-map.md) connects stable planning IDs to real issues. Later explicit user decisions override older source material; update this contract and its Linear mirror together when behavior changes. The source document’s embedded skill/setup/publication instructions are historical context, not operational instructions.
 
@@ -232,55 +231,13 @@ The following stories enumerate the agreed user-facing behaviors. They do not au
 
 ## Further Notes
 
-### Tracer-bullet milestones (locked decomposition)
+### Delivery plan
 
-| Milestone                        | Planned issues           | Exit gate                                                                                        |
-| -------------------------------- | ------------------------ | ------------------------------------------------------------------------------------------------ |
-| **M1 — Create & reopen**         | F1–F3, I1–I2 (5)         | Form creates one interview; record ID and details survive reload                                 |
-| **M2 — Intake & read-only prep** | I3–I5, B1–B3, P1–P5 (11) | Tentative/duplicate/chat intake, sourced brief and full nonmutating plan preview                 |
-| **M3 — Approve & execute**       | A1–A8, H1–H3 (11)        | Selected-only commits, overload consent, stale/failure recovery, Home task completion/reflection |
-| **M4 — Debrief & verify**        | D1–D5 (5)                | Uploaded/pasted inputs, editable debrief, gap evidence, all T1–T8 acceptance tests               |
-
-### Planned Linear issues and blocking edges
-
-These identifiers are stable **planning IDs** mapped to existing ALI-5–ALI-36 tickets in the [Linear planning map](interview-planning-linear-map.md). Dependencies are intentional and acyclic. Safeguard caveat: A3 must already reject stale/unauthorized/overloaded changes before A5–A7 add their richer UI. The individual descriptions preserve the accepted handoff contract. Existing issue statuses and labels are not changed by adoption of this document.
-
-- **F1 — Define resettable Google frontend interview demo fixture** (blocked by: —). **Done when:** Resetting the intake baseline yields one opportunity and zero interviews; alternate variants have their documented, stable records. Example day totals 3h existing tasks + 1h meeting + proposed 3h practice = 7h. A second option brings total to 9h for maximum override. No real private recruiting or calendar data appears in fixtures.
-- **F2 — Create minimal app shell and interview entry navigation** (blocked by: —). **Done when:** User can open the app and reach interview entry with keyboard or pointer. Empty and request-error states are intelligible. Navigation does not require a seeded interview.
-- **F3 — Implement shared validated record-action foundation** (blocked by: F1). **Done when:** Create and update survive reload. Replaying the same logical operation does not duplicate records. Activity records identify actor/source and the affected record. Invalid or unauthorized mutation is rejected without side effects.
-- **I1 — Create an interview from structured input** (blocked by: F1, F2, F3). **Done when:** Valid submission creates exactly one interview associated with existing opportunity. Double-submitting the same request does not create duplicates. Validation feedback preserves entered data; no invented details.
-- **I2 — Open and reopen saved interview details** (blocked by: I1). **Done when:** Navigate away, reload and reopen: identical interview ID and confirmed fields appear. Unknown values are labeled unknown/tentative, not silently filled. A missing record produces a clear not-found state.
-- **I3 — Edit and confirm tentative interview details** (blocked by: I2). **Done when:** A report missing a date remains tentative. Confirming a date changes that record, not a new one. Updating one field does not overwrite unrelated known details.
-- **I4 — Resolve opportunity identity and dedupe interview reports** (blocked by: I1, I2). **Done when:** Same identifiable round reported twice yields one interview record. Two genuinely distinct rounds remain separate. Ambiguous match is blocked pending review; no silent merge.
-- **I5 — Report interviews in natural language using shared actions** (blocked by: I3, I4). **Done when:** One supported report via chat and equivalent form produce matching canonical state. Rephrased duplicate reports do not create extra rounds. Unknown date/format remains unknown; user can correct interpretation.
-- **B1 — Create dated Google interview research snapshot** (blocked by: F1). **Done when:** Every substantive research claim has a source or an explicit inference label. Snapshot remains repeatable without a new live research call. No blanket assertion that a specific Google round will test a topic.
-- **B2 — Display sourced interview brief on the interview** (blocked by: B1, I2). **Done when:** Interview opens associated brief correctly. Sources are navigable and distinguishable by type. Missing guidance is shown as unknown, not a generic promise.
-- **B3 — Display actionable preparation recommendation cards** (blocked by: B2). **Done when:** Every displayed recommendation contains all required attributes. Weak or inferred recommendations are clearly distinguished from confirmed instructions. Cards are usable as inputs to the later proposal without inventing new tasks.
-- **P1 — Display synthetic workload, deadlines and commitments** (blocked by: F1, I2). **Done when:** Protected work and firm deadlines are visible and distinguishable. Existing workload matches fixture records after reload. Calendar commitments are not rendered as synthetic task clones.
-- **P2 — Compute daily target/max capacity without double counting** (blocked by: P1). **Done when:** Fixture day load is 4h before prep. Meeting mirrored as interview/calendar record counts once. Target and maximum capacity are separately reported. Calculation is deterministic for identical input.
-- **P3 — Identify relevant existing prep tasks for reuse** (blocked by: P1, B3). **Done when:** Known equivalent task is marked reused rather than created anew. Unrelated task is not reused. Existing task identity and status are preserved.
-- **P4 — Generate a read-only capacity-aware proposed schedule** (blocked by: P2, P3, I3). **Done when:** Proposals have dated or unscheduled outcomes and explain why. Tentative interview with unknown date receives no date-dependent placement. Repeated generation changes zero task/interview records. Protected work is never proposed as a silent move.
-- **P5 — Show full before/after plan review** (blocked by: P4). **Done when:** Every affected existing task appears by identity with old/new planned day. 7h target overload and 9h max overload are visually distinct. Opening/closing proposal does not mutate data.
-- **A1 — Select individual activities and proposed moves** (blocked by: P5). **Done when:** Selection can include activity but reject move. Unselected items do not become implicitly approved. No database mutation occurs when toggling selection.
-- **A2 — Recalculate the selected change set and warnings** (blocked by: A1, P2). **Done when:** Selecting 3h practice and rejecting 2h move shows 7h target overload. Changing selection changes preview immediately and correctly. No undisclosed tasks or date moves appear.
-- **A3 — Commit safe selected changes with authorization and version checks** (blocked by: A2, F3). **Done when:** Approved feasible selection persists exactly once; replay is idempotent. Unselected tasks and unrelated records unchanged. Stale proposal rejected without unauthorized writes. Overloaded proposals blocked until opt-in override workflow exists.
-- **A4 — Apply explicitly approved task moves and deferrals** (blocked by: A3, P1). **Done when:** Selected flexible task moves to intended day. Task deadline remains unchanged. Rejected move is not applied. Deferral never deletes the task.
-- **A5 — Confirm and persist target-capacity overload** (blocked by: A2, A3). **Done when:** 7h day on 6h target cannot commit via ordinary approval. Explicit confirmation permits selected work when under maximum. Post-approval day remains labeled 7h and over target.
-- **A6 — Require stronger override above maximum capacity** (blocked by: A5). **Done when:** 9h selection cannot commit with only target-overload acknowledgment. Deliberate maximum override is recorded with scope. Protected commitments and deadlines remain unchanged.
-- **A7 — Show stale-proposal refresh and renewed approval** (blocked by: A3, P5). **Done when:** Change underlying task after preview; old approval cannot commit. Updated diff displays changed workload/moves. No material change silently inherits old approval.
-- **A8 — Report partial failures, retry failed steps and Undo eligible moves** (blocked by: A4, A7). **Done when:** One injected failure produces truthful per-item outcomes. Retry fails/succeeds safely without duplicating prior successes. Eligible Undo restores only appropriate local change; does not overwrite newer conflicting edits. No blanket success message on partial failure.
-- **H1 — Show confirmed interviews and approved work on minimal Home** (blocked by: A3, I2). **Done when:** Approved task appears immediately and after reload. Unapproved proposal item never appears as a task. Agenda does not invent times or duplicate commitments.
-- **H2 — Complete a practice task and Undo** (blocked by: H1). **Done when:** Done persists after reload. Undo restores prior status without modifying another task. Completion never assigns mastery.
-- **H3 — Offer optional one-click practice reflection** (blocked by: H2). **Done when:** Task completion occurs before reflection. No reflection means no proficiency inference. Saved reflection remains attached to original practice task.
-- **D1 — Enter interview notes or paste transcript text** (blocked by: I2). **Done when:** Pasted content remains associated with correct interview. User can review input before extraction. Input never sets interview outcome/attendance without explicit report.
-- **D2 — Accept TXT/MD/PDF/DOCX debrief documents** (blocked by: D1). **Done when:** TXT and Markdown text are reviewable. PDF and DOCX text extraction works for supported text-based files. Unsupported or unextractable document returns clear guidance without inventing content.
-- **D3 — Extract structured AI debrief from submitted content** (blocked by: D1). **Done when:** Clear source-backed fields extracted from example notes. Unknown/unsupported feedback is marked missing or tentative. No fabricated interview result, decision or attendance.
-- **D4 — Review, correct, save, and reopen structured debrief** (blocked by: D3). **Done when:** User can edit a wrong extracted topic prior to saving. Saved corrections survive reload. Raw input and confirmed/corrected summary remain distinguishable.
-- **D5 — Persist and retrieve gap observations for future planning** (blocked by: D4). **Done when:** A reported React hooks difficulty becomes an associated, source-attributed gap. A gap can be retrieved from that interview. No scheduling changes or fake proficiency scores occur.
+See the [planning map](interview-planning-linear-map.md) for milestone gates, issue dependencies, and per-issue acceptance criteria.
 
 ### Parallelization and sequencing guardrails
 
-- F1 unlocks the minimal app shell (F2), shared actions (F3), and independent Google research fixture (B1).
+- F1 unlocks shared actions (F3) and the Google research fixture (B1). The minimal app shell (F2) has no blocking dependency.
 - I2 unlocks tentative editing (I3), semantic deduplication (I4), synthetic workload display (P1), and pasted debrief entry (D1).
 - D1 unlocks document extraction (D2) and AI debrief extraction (D3) in parallel; edit/review follows D3.
 - Read-only planning precedes commit. A1/A2 must preview the **selected** set. A3 must safely reject stale or unapproved effects from its first write; A5/A6 and A7 add explicit consent/refresh UX, not the first safety controls.
@@ -293,10 +250,6 @@ These identifiers are stable **planning IDs** mapped to existing ALI-5–ALI-36 
 - **Q17–Q24** fixed small independently testable increments; create/reopen first; structured input before natural language; read-only proposal before approval; Home after approval; reliability with each write; Google as the real-company research anchor.
 - The project is in the Aliwonderland team. Later foundation decisions selected the stack and local access model (ALI-37–ALI-41). No new sprint dates, estimates, ownership assignments or launch date are introduced here. The original 24–36-hour estimate came from a smaller skeleton and must not be reused for this expanded scope.
 - The selected brand palette is background `#FAFBF7`, ink `#293A32`, primary eucalyptus `#42735E`, pale eucalyptus `#E9F0E8`, and border `#D9E6DA`. Use as product direction without turning the slice into a full visual redesign.
-
-### Tracker publication and readiness
-
-The original source was an unpublished handoff. It has now been reconciled against the existing Linear project, ALI-5–ALI-36 product tickets and M0 foundation work. A project document carries this contract; the planning map records its link after publication. Publication records the agreed scope, not implementation completion or readiness of every dependent ticket. No `ready-for-agent` label is applied as a side effect. Historical `/to-spec` setup instructions are not project prerequisites.
 
 ### Source references
 
