@@ -4,17 +4,16 @@ An AI-assisted job search workspace for interview preparation, capacity-aware pl
 
 The current slice is a local interview-planning application using synthetic data.
 
-## Product direction and current state
+## Current state and product direction
 
-The broader app vision is preserved in the [original Product & Experience Specification v0.1](docs/archive/job-search-os-product-design-spec-v0.1-2026-10-29.md). Read the [confirmed context and scope decisions](docs/product-design-context.md) alongside it to distinguish the full app direction from the current interview-planning slice.
+The application provides a local Next.js app, SQLite persistence, explicit migrations, and automated checks. Interview intake, research briefs, planning, approval, practice, and debrief workflows remain planned.
 
-The intended journey is: report an interview → review sourced preparation guidance → preview a capacity-aware plan → approve selected changes → complete practice → save an editable debrief and evidence of gaps.
+The intended journey is: report an interview → review sourced preparation guidance → preview a capacity-aware plan → approve selected changes → complete practice → save an editable debrief. The first demonstration will use synthetic records and real dated public research sources.
 
-The current application provides the local app and persistence foundation. Interview intake, research briefs, planning, approval, practice and debrief workflows remain planned. The demonstration will use a resettable Google frontend interview scenario with synthetic interview, opportunity, task and calendar data, plus real dated public research sources.
-
-See the [interview-planning contract](docs/interview-planning-spec.md) for scope, safeguards and acceptance scenarios T1–T8, and the [Linear planning map](docs/interview-planning-linear-map.md) for the existing tickets and milestone gates. Linear tracks execution status; the contract records required behavior.
-
-Plans remain read-only until explicit approval. Only selected, disclosed and revalidated changes may commit; protected commitments and firm deadlines remain intact. Completion does not imply mastery, and debriefs do not automatically replan work. Live integrations and production rollout are outside this slice.
+- [Interview-planning contract](docs/interview-planning-spec.md): required behavior, safeguards, and acceptance scenarios T1–T8.
+- [Linear planning map](docs/interview-planning-linear-map.md): issue links and milestone gates. Linear owns execution status.
+- [Confirmed scope decisions](docs/product-design-context.md): current slice boundaries and their relationship to the preserved [broader product design](docs/archive/job-search-os-product-design-spec-v0.1-2026-10-29.md).
+- [Stack decision](docs/decisions/0001-local-development-stack.md): architecture and rationale.
 
 ## Prerequisites
 
@@ -25,7 +24,7 @@ The application uses **Node 24.22.2** and **pnpm 11.25.0**. Use the checked-in `
 ## Install and start
 
 ```sh
-cd /Users/alison/Dropbox/@alison/src/JobOS
+cd /path/to/JobOS
 ./pnpmw install --frozen-lockfile
 cp .env.example .env.local
 ./pnpmw dev
@@ -40,14 +39,13 @@ Open http://127.0.0.1:3000. Stop with Ctrl+C. Both development and production sc
 ```sh
 ./pnpmw exec node --version
 ./pnpmw --version
-./pnpmw typecheck
-./pnpmw build
+./pnpmw check
 ./pnpmw start
 ```
 
 Expected tool versions: `v24.22.2` and `11.25.0`. After `start`, open the local URL and confirm the JobOS heading and introductory text, reload, and check a narrow window for horizontal overflow. Stop with Ctrl+C before starting another server. `start` requires a successful build.
 
-The lockfile fixes resolved application dependencies. `install --frozen-lockfile` fails if the manifest and lockfile disagree rather than silently updating them. Formatting, linting, automated tests, and CI are tracked in ALI-42.
+The lockfile fixes resolved application dependencies. `install --frozen-lockfile` fails if the manifest and lockfile disagree rather than silently updating them.
 
 ## Troubleshooting
 
@@ -63,10 +61,6 @@ The lockfile fixes resolved application dependencies. `install --frozen-lockfile
 - `src/components`: reusable components and CSS Modules
 - `src/domain`: framework-independent shared domain rules
 - `src/server`: server-only adapters
-
-## Scope
-
-React, Next.js App Router, TypeScript, and CSS Modules. SQLite and stable Drizzle are selected; database implementation belongs to ALI-40. Single local user, synthetic data, no login or hosting commitment. Secrets stay server-side and untracked. This foundation implements no interview workflow or AI integration.
 
 ## Development database
 
@@ -101,6 +95,6 @@ See [development access and secrets](docs/development-access.md) for the single-
 
 Run `./pnpmw check` for formatting, lint, TypeScript, database tests, production build, and a production startup smoke test. Use `./pnpmw format` to apply formatting. `./pnpmw test` uses Node's test runner with tsx; `./pnpmw test:smoke` requires a preceding build. Database tests create disposable databases, check migration repeatability and persistence, and clean up afterward. The startup test chooses an available localhost port and shuts its server down.
 
-GitHub Actions runs the same checks on push and pull requests. The workflow is prepared locally; it cannot run on GitHub until this repository has a remote and is pushed. No cloud credentials or live AI calls are required. Avoid running a production build concurrently with development work in the same checkout; use a separate checkout for uninterrupted development.
+GitHub Actions runs the same checks on push and pull requests. No cloud credentials or live AI calls are required. Avoid running a production build concurrently with development work in the same checkout; use a separate checkout for uninterrupted development.
 
 Lint compatibility note: ESLint is pinned to 9.39.5 because the React, import, and accessibility plugins bundled by eslint-config-next 16.4.3 do not yet declare ESLint 10 support. ESLint 9 is deprecated upstream; revisit the pin when those plugins support the maintained major.

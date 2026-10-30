@@ -1,1 +1,1 @@
-Server-only adapters and persistence belong here. Database setup: ALI-40.
+Server-only adapters and persistence belong here. Application code accesses the database through `db/index.ts`; CLI scripts use `db/connection.ts`. See [database setup and migrations](../../README.md#development-database) and [access boundaries](../../docs/development-access.md).
