@@ -11,7 +11,7 @@
 
 **Repository review (October 30, 2026):** The local JobOS repository now exists. React, Next.js App Router, TypeScript, CSS Modules, SQLite and stable Drizzle are selected. Node and pnpm versions are pinned in the repository. The application is a single-user, loopback-only synthetic-data prototype without login. The foundation contains database migration/reopen coverage using `node:test` and a production-startup HTTP smoke test; it does not yet implement interview workflows or the T1–T8 acceptance suite. See [development access and secrets](development-access.md) for the current access boundary. The [stack ADR](decisions/0001-local-development-stack.md) records the architecture decision. Natural-language/debrief model providers and the full workflow test harness remain open.
 
-**Document ownership:** This repository file is the maintained product contract; the Linear project document mirrors it. Linear owns execution status, issue relationships and milestone progress. The [planning map](interview-planning-linear-map.md) connects stable planning IDs to real issues. Later explicit user decisions override older source material; update this contract and its Linear mirror together when behavior changes. The source document’s embedded skill/setup/publication instructions are historical context, not operational instructions.
+**Document ownership:** This repository file is the maintained product contract; the Linear project document mirrors it. Linear owns task-specific acceptance criteria, dependencies, execution status, milestone gates and verification evidence. The [planning map](interview-planning-linear-map.md) connects stable planning IDs to real issues. Later explicit user decisions override older source material; update this contract and its Linear mirror together when behavior changes. The source document’s embedded skill/setup/publication instructions are historical context, not operational instructions.
 
 ## Problem Statement
 
@@ -233,7 +233,7 @@ The following stories enumerate the agreed user-facing behaviors. They do not au
 
 ### Delivery plan
 
-See the [planning map](interview-planning-linear-map.md) for milestone gates, issue dependencies, and per-issue acceptance criteria.
+See the [planning map](interview-planning-linear-map.md) for the project link and planning identifiers; Linear owns milestone gates, issue dependencies, and per-issue acceptance criteria.
 
 ### Parallelization and sequencing guardrails
 

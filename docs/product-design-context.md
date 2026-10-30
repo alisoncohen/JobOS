@@ -27,7 +27,7 @@ The archived Markdown is an unchanged copy of the supplied document. Preserve it
 - The archived v0.1 preserves the broader vision and discovery history.
 - This note records the later clarifications confirmed above; it does not resolve the remaining broader-app open questions.
 - The [interview-planning contract](interview-planning-spec.md) defines the narrower current slice and T1–T8 acceptance scenarios. Its specific slice requirements take precedence over older descriptions of the first working slice in v0.1.
-- The [Linear planning map](interview-planning-linear-map.md) links the existing slice tickets. Linear owns current execution status.
+- The [Linear index](interview-planning-linear-map.md) links the existing slice tickets. Linear owns current execution status.
 - [Local development stack](decisions/0001-local-development-stack.md) and [development access](development-access.md) document current implementation decisions and boundaries.
 
 ## Archive provenance

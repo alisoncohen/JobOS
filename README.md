@@ -11,7 +11,7 @@ The application provides a local Next.js app, SQLite persistence, explicit migra
 The intended journey is: report an interview → review sourced preparation guidance → preview a capacity-aware plan → approve selected changes → complete practice → save an editable debrief. The first demonstration will use synthetic records and real dated public research sources.
 
 - [Interview-planning contract](docs/interview-planning-spec.md): required behavior, safeguards, and acceptance scenarios T1–T8.
-- [Linear planning map](docs/interview-planning-linear-map.md): issue links and milestone gates. Linear owns execution status.
+- [Linear index](docs/interview-planning-linear-map.md): project link and planning identifiers. Linear owns task criteria, dependencies, milestones, and execution status.
 - [Confirmed scope decisions](docs/product-design-context.md): current slice boundaries and their relationship to the preserved [broader product design](docs/archive/job-search-os-product-design-spec-v0.1-2026-10-29.md).
 - [Stack decision](docs/decisions/0001-local-development-stack.md): architecture and rationale.
 
