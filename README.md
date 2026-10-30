@@ -11,7 +11,7 @@ The application provides a local Next.js app, SQLite persistence, explicit migra
 The intended journey is: report an interview → review sourced preparation guidance → preview a capacity-aware plan → approve selected changes → complete practice → save an editable debrief. The first demonstration will use synthetic records and real dated public research sources.
 
 - [Interview-planning contract](docs/interview-planning-spec.md): required behavior, safeguards, and acceptance scenarios T1–T8.
-- [Linear index](docs/interview-planning-linear-map.md): project link and planning identifiers. Linear owns task criteria, dependencies, milestones, and execution status.
+- [Linear project](https://linear.app/aliwonderland/project/job-search-os-interview-planning-vertical-slice-3044c395c70e): work planning and execution status.
 - [Confirmed scope decisions](docs/product-design-context.md): current slice boundaries and their relationship to the preserved [broader product design](docs/archive/job-search-os-product-design-spec-v0.1-2026-10-29.md).
 - [Stack decision](docs/decisions/0001-local-development-stack.md): architecture and rationale.
 
@@ -32,7 +32,7 @@ cp .env.example .env.local
 
 Open http://127.0.0.1:3000. Stop with Ctrl+C. Both development and production scripts bind to 127.0.0.1, so access stays on this computer. Run only one development server per checkout. If JobOS is already running from this directory, use it or stop it with Ctrl+C before restarting; changing ports does not bypass its development lock. If port 3000 is occupied by a different application, run `./pnpmw dev --port 3001` and open that port.
 
-`.env.local` can set `DATABASE_PATH`; the default is `./data/jobos.db`. It is ignored by Git. Never put credentials in `NEXT_PUBLIC_*` variables, which can be sent to the browser. AI configuration will arrive with its implementation ticket.
+`.env.local` can set `DATABASE_PATH`; the default is `./data/jobos.db`. It is ignored by Git. Never put credentials in `NEXT_PUBLIC_*` variables, which can be sent to the browser.
 
 ## Verify
 
@@ -83,7 +83,7 @@ DATABASE_PATH=./data/verification.db ./pnpmw db:migrate
 DATABASE_PATH=./data/verification.db ./pnpmw db:check
 ```
 
-For future schema changes, edit `src/server/db/schema.ts`, run `./pnpmw db:generate`, inspect the generated SQL and metadata in `drizzle/`, then run `db:migrate`. Never rewrite an applied migration. The baseline intentionally executes only `SELECT 1`; Drizzle owns the migration bookkeeping table. Interview models and fixtures belong to their feature issues.
+For future schema changes, edit `src/server/db/schema.ts`, run `./pnpmw db:generate`, inspect the generated SQL and metadata in `drizzle/`, then run `db:migrate`. Never rewrite an applied migration. The baseline intentionally executes only `SELECT 1`; Drizzle owns the migration bookkeeping table.
 
 The server-only application entry point is `src/server/db/index.ts`. It opens the connection lazily. CLI commands use the same connection factory, enabling foreign keys, WAL journaling, and a five-second busy timeout. pnpm explicitly permits native build scripts for better-sqlite3 and esbuild; fresh installation may need a compiler if no compatible prebuilt SQLite binary is available.
 

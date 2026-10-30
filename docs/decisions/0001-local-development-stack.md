@@ -1,6 +1,6 @@
 # 1. Local development stack
 
-Status: accepted. Source: ALI-37, confirmed with Alison.
+Status: accepted, confirmed with Alison.
 
 ## Context
 
@@ -22,4 +22,4 @@ One app and a file-backed database reduce operational setup. Drizzle exposes SQL
 
 The custom component set supports frontend interview practice but costs more time than adopting a full UI library. Standalone library packaging, extensive theming, and a component catalogue are deferred.
 
-Revisit persistence when multiple app instances need coordinated writes. Shared or hosted access requires a new authentication/authorization decision. Production hosting, AI provider, and file-parsing libraries remain undecided. Node's test runner with tsx was selected in ALI-42 for foundation checks; UI-specific tooling may be added when needed.
+Revisit persistence when multiple app instances need coordinated writes. Shared or hosted access requires a new authentication/authorization decision. Production hosting, AI provider, and file-parsing libraries remain undecided. Node's test runner with tsx supports foundation checks; UI-specific tooling may be added when needed.

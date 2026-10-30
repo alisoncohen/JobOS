@@ -8,7 +8,7 @@ Local-only binding limits network reachability; it does not authenticate a perso
 
 ## Server authority
 
-There are no application write endpoints or domain mutations in the foundation yet. When feature issues introduce them:
+There are no application write endpoints or domain mutations in the foundation yet. Application writes must follow these requirements:
 
 - Use one server-owned local actor for this single-user slice. Do not accept an authoritative actor/user identity supplied by the browser or model.
 - Keep database access and credentials server-side. Application code imports the guarded `src/server/db/index.ts` entry point; the low-level connection factory is for server/CLI use only.

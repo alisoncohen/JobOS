@@ -1,17 +1,8 @@
 # Job Search OS — Interview Planning Vertical Slice
 
-**Product and acceptance contract, reconciled with the repository and Linear**  
-**Spec key:** JSOS-VS-001  
-**Date:** October 30, 2026  
-**Status:** Adopted for project documentation on October 30, 2026; product workflows remain planned  
-**Issue breakdown:** 32 existing product tickets (ALI-5–ALI-36), four product milestones; development foundation tracked separately in M0 (ALI-37–ALI-42)  
-**Tracker:** [Job Search OS — Interview Planning Vertical Slice](https://linear.app/aliwonderland/project/job-search-os-interview-planning-vertical-slice-3044c395c70e). Workflow statuses and labels are managed in Linear; this document does not automatically mark work implementation-ready.
+Product behavior and acceptance contract for the local synthetic-data prototype. Work planning and execution status live in Linear; this document records requirements, not implementation progress.
 
-**Source authority:** This contract and the [confirmed scope decisions](product-design-context.md) record current requirements. The archived v0.1 provides historical context. Record later explicit decisions here and in the Linear mirror so implementation does not depend on access to past conversations.
-
-**Repository review (October 30, 2026):** The local JobOS repository now exists. React, Next.js App Router, TypeScript, CSS Modules, SQLite and stable Drizzle are selected. Node and pnpm versions are pinned in the repository. The application is a single-user, loopback-only synthetic-data prototype without login. The foundation contains database migration/reopen coverage using `node:test` and a production-startup HTTP smoke test; it does not yet implement interview workflows or the T1–T8 acceptance suite. See [development access and secrets](development-access.md) for the current access boundary. The [stack ADR](decisions/0001-local-development-stack.md) records the architecture decision. Natural-language/debrief model providers and the full workflow test harness remain open.
-
-**Document ownership:** This repository file is the maintained product contract; the Linear project document mirrors it. Linear owns task-specific acceptance criteria, dependencies, execution status, milestone gates and verification evidence. The [planning map](interview-planning-linear-map.md) connects stable planning IDs to real issues. Later explicit user decisions override older source material; update this contract and its Linear mirror together when behavior changes. The source document’s embedded skill/setup/publication instructions are historical context, not operational instructions.
+See [confirmed product context](product-design-context.md) for scope decisions, [local development stack](decisions/0001-local-development-stack.md) for architecture, and [development access](development-access.md) for access boundaries. Later explicit product decisions take precedence over older source material.
 
 ## Problem Statement
 
@@ -31,8 +22,6 @@ Build one continuous journey from interview intake to learning evidence:
 4. **Decide:** Let the user select individual changes, recalculate the actual selected schedule, confirm target overload or separately override maximum overload, and safely approve only authorized, nonstale operations. Preserve deadlines and protected commitments.
 5. **Act:** Show confirmed interview commitments and approved tasks on a minimal Home experience; mark practice complete immediately, support eligible Undo, and offer nonblocking optional reflection.
 6. **Learn:** Accept pasted notes, pasted transcripts, or TXT/Markdown/text-based PDF/DOCX documents; extract an editable, evidence-aware debrief, and store confirmed gap observations for future use **without** automatically changing the approved plan.
-
-**Product checkpoint sequence:** M1 Create/reopen (5 tickets); M2 Intake and read-only prep (11); M3 Approve and execute (11); M4 Debrief and verify (5). Each ticket is a small working behavior with testable outcomes, not an isolated layer or static component. Reliability accompanies each mutation; it is not deferred to a final cleanup phase.
 
 **Observable outcome:** One complete journey plus tentative-interview, overload, stale-proposal, duplicate-report, partial-failure/retry, and debrief-evidence checks, all reproducible from a fixed synthetic fixture.
 
@@ -143,6 +132,7 @@ The following stories enumerate the agreed user-facing behaviors. They do not au
 
 - **Locked — Shared action pathway:** Form and bounded natural-language intake must resolve through the same validated create/update interview behavior and canonical interview identity. They must not each maintain separate record state.
 - **Locked — Record responsibilities:** The narrow slice needs Opportunity, Interview, Task, CalendarCommitment, ResearchSnapshot/PrepRecommendation, PrepProposal/ProposedChange, PracticeReflection, Debrief/GapObservation, and ActivityEvent. Introduce records only when necessary for their working interaction, not an entire future CRM.
+- **Specified contract — Intake feedback:** Validation preserves entered input. Empty, request-error and missing-record states are clear. Editing one field preserves unrelated known details.
 - **Specified contract — Interview mutation:** An input identifies a tracked opportunity and some reported round facts; its output is the current interview identity, known/tentative fields, provenance, and verified result. Matching uses existing opportunity and round context. Repeated actions and reports reuse a logical interview; unresolved ambiguity is surfaced rather than guessed.
 - **Specified contract — Read interview:** Persisted identity and reported fields are visible after navigation/reload. Confirming a tentative date updates the existing record and preserves unknown round/format details.
 - **Locked — Research:** Use a real, dated, independently sourced **Google frontend engineering** brief fixture, not live company-research generation. Research applicability to a fictional round must be qualified. Each recommendation has objective, exercise/resource, duration, rationale, completion criteria and evidence category.
@@ -153,6 +143,7 @@ The following stories enumerate the agreed user-facing behaviors. They do not au
 - **Locked — Capacity authorization:** Target overload requires explicit acknowledgment; maximum-capacity exceedance requires a stronger override. Both remain labeled after commit. Neither authorizes modification of protected meetings, existing firm deadlines or unselected tasks.
 - **Locked — Recovery:** Partially successful batches show exact results and permit safe failed-only retry. Eligible local task-status/day modifications can be undone only if no newer conflicting change makes reversal unsafe.
 - **Locked — Home:** Build the actual agenda and approved-work list after safe approvals exist. Task completion is immediate, persistent and reversible where eligible. Optional reflections are separate from task completion and do not create unsupported mastery scores.
+- **Specified contract — Document review:** Extracted text is reviewable before interpretation. Empty, scanned, unsupported or oversized files receive clear guidance without invented content.
 - **Locked — Debrief input:** Pasted notes, pasted transcripts and supported TXT/MD/text-based PDF/DOCX sources are in scope. Audio/video recording, speech transcription, arbitrary formats and OCR are not.
 - **Locked — AI debrief:** Generate an editable draft preserving explicit interviewer feedback separately from candidate impressions/inference, then permit human review and correction. Gap observations point to saved evidence. No attendance, outcome or future schedule mutation is inferred.
 - **Locked — Audit/provenance:** Every meaningful update distinguishes source, actor, authorization, target record, verified outcome and permissible Undo. Research fixture, user report and AI inference must remain distinguishable.
@@ -161,6 +152,7 @@ The following stories enumerate the agreed user-facing behaviors. They do not au
 ### Representative synthetic fixture (locked acceptance assumptions)
 
 - Real research context: **Google**; fictional frontend opportunity requisition, interview and all user workload. No connection to the user's actual applications or calendar.
+- Resetting the intake baseline yields one opportunity and zero interviews; alternate variants have stable, documented records.
 - Fixed/resettable reference clock, confirmed interview five days later, plus a separate date-TBD variant; one protected deadline; one reusable prep task.
 - Day target **6 hours**, configured maximum **8 hours**, baseline **4 hours** (3h task workload and one unique 1h commitment), including one movable 2h task.
 - Adding 3h prep without moving existing work yields **7h** (target overload). An approved flexible 2h move to a day with space yields **5h** on the original day. A further 2h recommendation yields **9h** without moves (maximum override).
@@ -168,11 +160,10 @@ The following stories enumerate the agreed user-facing behaviors. They do not au
 
 ### Boundaries and still-open engineering selections
 
-- **Selected foundation:** React + Next.js App Router, TypeScript, CSS Modules, SQLite with stable Drizzle, and the repository-pinned Node/pnpm runtime. Local single-user synthetic data, loopback binding and no login are the current access decision; see ALI-37–ALI-41 and `development-access.md`.
+- **Selected foundation:** React + Next.js App Router, TypeScript, CSS Modules, SQLite with stable Drizzle, and the repository-pinned Node/pnpm runtime. Local single-user synthetic data, loopback binding and no login are the current access decision; see [local development stack](decisions/0001-local-development-stack.md) and [development access](development-access.md).
 - **Open:** exact feature API/module interfaces, natural-language/debrief model providers, any needed background processing, and the full workflow test harness. Hosting and real-data privacy/retention would require separate scope decisions; they are not requirements of this slice.
 - **Open:** exact module interfaces and logical IDs should follow the existing `src/domain` and `src/server` boundaries; this contract mandates behavior rather than new module names or signatures.
 - **Proposed seam:** Test through **a user-visible workflow boundary backed by authoritative persisted domain actions**: submit form or natural-language input; inspect the resulting record and history after reload; preview/approve; inspect only actual committed state; complete and debrief. This is the highest practical seam suggested by the accepted behavior. Existing `node:test` database and HTTP startup tests establish foundation checks, but no cross-feature workflow harness exists yet. Use these conventions where appropriate and select the feature acceptance seam during implementation; this document does not claim browser interaction coverage already exists.
-- **Tracker reconciliation:** All 32 product issues and their four milestones already exist in the Aliwonderland Linear project. Preserve them and the separate M0 foundation issues. Stable F1–D5 identifiers are reference keys, not additional tickets or permission to change readiness labels.
 
 ## Testing Decisions
 
@@ -184,17 +175,6 @@ The following stories enumerate the agreed user-facing behaviors. They do not au
 - Verify _non-events_ as first-class outcomes: no duplicate interview, no schedule write on preview, no protected task move, no unauthorized approval, no mastery claim after skipped reflection, no automatic replan after debrief.
 - Verify failure states by injecting a failure in one approved operation, then inspecting itemized results and safe retry. A generic error banner is insufficient.
 - Preserve accessibility coverage for all required actions through keyboard-operable controls and textual state cues, not drag-only or color-only interactions.
-
-### Tests and modules / user-visible surfaces
-
-| Test area             | Behavior tested                                                                                           | Primary planned issues |
-| --------------------- | --------------------------------------------------------------------------------------------------------- | ---------------------- |
-| Intake and identity   | Create/reopen; tentative state; form/chat equivalence; identity ambiguity; no duplicate round             | F3, I1–I5              |
-| Research brief        | Correct dated snapshot; explicit source category; valid links; uncertainty                                | B1–B3                  |
-| Planning              | Unique commitments; 4h/7h/9h arithmetic; reuse; read-only proposal; complete before/after                 | P1–P5                  |
-| Approval and recovery | Selected-only commit; target/max overrides; stale state; retry only failures; Undo                        | A1–A8                  |
-| Home and reflection   | Persisted approved work; immediate Done; optional reflection without false mastery                        | H1–H3                  |
-| Debrief               | TXT/MD/PDF/DOCX source review; editable AI draft; attributable confirmed gaps; no invented hiring outcome | D1–D5                  |
 
 ### Cross-feature acceptance scenarios
 
@@ -213,7 +193,7 @@ The following stories enumerate the agreed user-facing behaviors. They do not au
 
 - **Existing tests in the codebase:** `tests/database.test.ts` checks migration repeatability, persisted data after reopening, foreign-key configuration and integrity. `tests/startup.smoke.ts` starts the production server and checks the homepage response. Both use `node:test`; neither proves feature-level user interaction or T1–T8.
 - **Feature implementation follow-up:** Build on the existing test conventions and choose a workflow harness that can observe canonical persisted actions and essential UI interactions. Retain the proposed high-level seam as a requirement to validate, without claiming the foundation smoke test covers the product journey.
-- **Progress proof:** Each small ticket must demonstrate the behavior and a relevant failure case; the four milestone gates are verified by records, not screenshots alone. All T1–T8 must pass to finish the full slice.
+- **Progress proof:** Each implemented behavior must be verified with persisted records and a relevant failure case, not screenshots alone. All T1–T8 must pass to finish the full slice.
 
 ## Out of Scope
 
@@ -229,32 +209,6 @@ The following stories enumerate the agreed user-facing behaviors. They do not au
 - Production onboarding, public account connection, production credentials, data migration, deployment SLA, pricing or usage billing.
 - Unapproved changes to technical framework, architecture, security boundaries or rollout commitments.
 
-## Further Notes
+## Visual direction
 
-### Delivery plan
-
-See the [planning map](interview-planning-linear-map.md) for the project link and planning identifiers; Linear owns milestone gates, issue dependencies, and per-issue acceptance criteria.
-
-### Parallelization and sequencing guardrails
-
-- F1 unlocks shared actions (F3) and the Google research fixture (B1). The minimal app shell (F2) has no blocking dependency.
-- I2 unlocks tentative editing (I3), semantic deduplication (I4), synthetic workload display (P1), and pasted debrief entry (D1).
-- D1 unlocks document extraction (D2) and AI debrief extraction (D3) in parallel; edit/review follows D3.
-- Read-only planning precedes commit. A1/A2 must preview the **selected** set. A3 must safely reject stale or unapproved effects from its first write; A5/A6 and A7 add explicit consent/refresh UX, not the first safety controls.
-- H1 begins after A3 persists tasks and must read those records, not a second mock state.
-- Split I4 identity/dedup, A8 partial-retry/Undo, and D2 text/PDF-DOCX as implementation subtasks only if needed; preserve 32 stable planning parent IDs.
-
-### Locked decisions and current approvals
-
-- **Q1–Q16** fixed the user journey, researched fixture, tentative state, evidence/uncertainty, selective approval, explicit overload, nonblocking reflection, text/document debrief, recovery, and required demonstration scenarios.
-- **Q17–Q24** fixed small independently testable increments; create/reopen first; structured input before natural language; read-only proposal before approval; Home after approval; reliability with each write; Google as the real-company research anchor.
-- The project is in the Aliwonderland team. Later foundation decisions selected the stack and local access model (ALI-37–ALI-41). No new sprint dates, estimates, ownership assignments or launch date are introduced here. The original 24–36-hour estimate came from a smaller skeleton and must not be reused for this expanded scope.
-- The selected brand palette is background `#FAFBF7`, ink `#293A32`, primary eucalyptus `#42735E`, pale eucalyptus `#E9F0E8`, and border `#D9E6DA`. Use as product direction without turning the slice into a full visual redesign.
-
-### Source references
-
-- Accepted `/grill-me` conversation decisions Q1–Q24 and the final vertical-slice product contract.
-- _Job Search OS — Product & Experience Specification_ v0.1 (October 29, 2026), user-provided.
-- _Job Search OS — Interview-Planning Vertical Slice_, Linear project handoff (October 29, 2026), with all 32 issue descriptions and dependencies.
-- _Job Search OS — Interview Planning Vertical Slice: Engineering Specification_ v1.0, prior draft (superseded as `/to-spec` format; retains useful detailed contracts).
-- Original source artifact: `Job_Search_OS_to-spec_Actual_Skill_v1.0.md`, supplied by the user; `/to-spec` format attribution is historical. Referenced conversation artifacts were not independently available for this reconciliation; no additional decisions are inferred from them.
+The selected brand palette is background `#FAFBF7`, ink `#293A32`, primary eucalyptus `#42735E`, pale eucalyptus `#E9F0E8`, and border `#D9E6DA`. A full design system is outside this slice.
