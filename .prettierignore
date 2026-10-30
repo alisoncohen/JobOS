@@ -1,0 +1,9 @@
+.next/
+node_modules/
+data/
+pnpm-lock.yaml
+drizzle/meta/
+next-env.d.ts
+
+# Preserve the user-supplied historical document byte for byte.
+docs/archive/job-search-os-product-design-spec-v0.1-2026-10-29.md
