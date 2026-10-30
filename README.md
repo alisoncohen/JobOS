@@ -6,6 +6,8 @@ The current slice is a local interview-planning application using synthetic data
 
 ## Product direction and current state
 
+The broader app vision is preserved in the [original Product & Experience Specification v0.1](docs/archive/job-search-os-product-design-spec-v0.1-2026-10-29.md). Read the [confirmed context and scope decisions](docs/product-design-context.md) alongside it to distinguish the full app direction from the current interview-planning slice.
+
 The intended journey is: report an interview → review sourced preparation guidance → preview a capacity-aware plan → approve selected changes → complete practice → save an editable debrief and evidence of gaps.
 
 The current application provides the local app and persistence foundation. Interview intake, research briefs, planning, approval, practice and debrief workflows remain planned. The demonstration will use a resettable Google frontend interview scenario with synthetic interview, opportunity, task and calendar data, plus real dated public research sources.
