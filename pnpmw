@@ -1,0 +1,14 @@
+#!/bin/sh
+# Run the pinned toolchain without a global pnpm installation.
+set -eu
+cd "$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
+# Some macOS shells expose an obsolete Intel Node before Apple Silicon Homebrew.
+if ! node --version >/dev/null 2>&1 && [ -x /opt/homebrew/bin/node ]; then
+  PATH="/opt/homebrew/bin:$PATH"
+  export PATH
+fi
+if ! command -v npm >/dev/null 2>&1; then
+  echo "JobOS requires npm to bootstrap its pinned Node and pnpm toolchain." >&2
+  exit 1
+fi
+exec npm exec --yes --package=node@24.22.2 --package=pnpm@11.25.0 -- pnpm "$@"

@@ -1,0 +1,20 @@
+.main {
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 6rem 1.5rem;
+}
+.main h1 {
+  max-width: 15ch;
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+}
+.main p {
+  line-height: 1.6;
+}
+.eyebrow {
+  color: #416044;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
